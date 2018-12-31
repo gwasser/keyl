@@ -20,7 +20,8 @@ library
                        Pie.Syntactic.Parser,
                        Pie.Syntactic.AST,
                        Pie.REPL.Pretty,
-                       Pie.REPL.Interpreter
+                       Pie.REPL.Interpreter,
+                       Pie.Version
   build-depends:       base,
                        utf8-string,
                        array,

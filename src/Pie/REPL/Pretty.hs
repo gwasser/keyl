@@ -42,4 +42,4 @@ instance Pretty Exp where
   ppr p (AddOne a) = (parensIf (p > 0) $ PP.text "add1" <+> ppr (p+1) a)
 
 ppexpr :: Exp -> String
-ppexpr = PP.render . ppr 0 
+ppexpr = PP.render . ppr 1 

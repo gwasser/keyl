@@ -23,6 +23,7 @@
 module Main where
 
 -- pie modules
+import Pie.Version (pieVersion)
 import Pie.Lexical.Lexer (alexMonadScanTokens)
 import Pie.Syntactic.Parser (happyTokenParse, E(..))
 import Pie.Syntactic.AST (Program(..))
@@ -43,9 +44,9 @@ process ast line = do
     case res of
          Failed err -> print err
          Ok (Program ex) -> do 
-             if ast then print ex else return ()
+             if ast then putStr "[ast]: " >> print ex else return ()
              case eval ex of
-                  Nothing -> putStrLn "Error Evaluating"
+                  Nothing -> putStr "Error Evaluating: " >> putStrLn line
                   Just result -> print $ ppexpr result
                   
 repl :: Bool -> IO ()
@@ -69,7 +70,7 @@ parseArgs []             = version >> ctrld >> repl False
 parseArgs _              = error "Error parsing command line arguments"
 
 usage   = putStrLn "Usage: pie [-vh]"
-version = putStrLn "Pie interpreter 0.1.0"
+version = putStr "Pie interpreter " >> putStrLn pieVersion
 ctrld   = putStrLn "Type CTRL+D to exit"
 exit    = exitWith ExitSuccess
 die     = exitWith (ExitFailure 1)

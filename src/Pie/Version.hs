@@ -19,25 +19,9 @@
     along with pie. If not, see <http://www.gnu.org/licenses/>.
 -}
 
+module Pie.Version (
+  pieVersion
+) where 
 
-module Main where
-
--- pie modules
-import Pie.Version (pieVersion)
-
--- base modules
-import System.Environment
-import System.Exit
-
-main :: IO ()
-main = getArgs >>= parseArgs
-
-parseArgs ["-h"] = usage   >> exit
-parseArgs ["-v"] = version >> exit
---parseArgs []     = print $ getContents
---parseArgs fs     = print $ concat `fmap` mapM readFile fs
-
-usage   = putStrLn "Usage: piec [-vh] [file ..]"
-version = putStr "piec - the Pie language compiler - version" >> putStrLn pieVersion
-exit    = exitWith ExitSuccess
-die     = exitWith (ExitFailure 1)
+-- be sure to keep this updated with the README!
+pieVersion = "0.1.0.0"
