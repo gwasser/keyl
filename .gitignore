@@ -1,0 +1,4 @@
+.stack-work/
+.directory
+*.hi
+*.o
