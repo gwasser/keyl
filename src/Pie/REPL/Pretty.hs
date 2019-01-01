@@ -40,6 +40,9 @@ class Pretty p where
 instance Pretty Exp where
   ppr _ Zero = PP.text "0"
   ppr p (AddOne a) = (parensIf (p > 0) $ PP.text "add1" <+> ppr (p+1) a)
+  ppr p (AtomType) = PP.text "Atom"
+  ppr p (AtomLiteral s) = PP.text "'" <+> PP.text s
+  ppr p (CheckSame e1 e2) = (parensIf (p > 0) $ PP.text ":check-same" <+> ppr (p+1) e1 <+> ppr (p+1) e2)
 
 ppexpr :: Exp -> String
 ppexpr = PP.render . ppr 1 

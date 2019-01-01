@@ -64,7 +64,9 @@ data Token = TEOF
            | LPAREN 
            | RBRACE 
            | RBRACKET 
-           | RPAREN 
+           | RPAREN
+           -- interpreter commands
+           | CHECKSAME
            deriving (Eq, Show)
 
 getStr :: Token -> String

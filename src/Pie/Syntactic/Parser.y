@@ -66,6 +66,8 @@ import Pie.Syntactic.AST (Program(..), Exp(..))
       ']'             { L { getPos=_, unPos=RBRACKET } }
       
       VAR             { L { getPos=_, unPos=VAR s } }
+      
+      CHECKSAME       { L { getPos=_, unPos=CHECKSAME } }
 
 %%
 
@@ -84,6 +86,7 @@ exp         : U                                             { ExpWithPosn (Unive
             | ZERO                                          { ExpWithPosn (Zero) (getPos $1) }
             | '(' ADDONE exp ')'                            { ExpWithPosn (AddOne $3) (getPos $1) }
             | NUM                                           { ExpWithPosn (NatLiteral (getNum $ unPos $1)) (getPos $1) }
+            | CHECKSAME exp exp                             { ExpWithPosn (CheckSame $2 $3) (getPos $1) }
 
      
 {
@@ -105,6 +108,9 @@ getAST (Ok (Program p)) = returnE $ Program $ removePosn p
           removePosn (ExpWithPosn (PairCdr t1) pos) = PairCdr (removePosn t1)
           removePosn (ExpWithPosn (AddOne t1) pos) = AddOne (removePosn t1)
           removePosn (ExpWithPosn (NatLiteral n) pos) = NatLiteral n
+          -- interpreter commands, not present in final AST
+          removePosn (ExpWithPosn (CheckSame t1 t2) pos) = CheckSame (removePosn t1) (removePosn t2)
+          -- any other expression not covered above
           removePosn (ExpWithPosn t pos) = t
 
 parseError :: [L Token] -> E a

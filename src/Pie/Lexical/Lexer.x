@@ -63,6 +63,7 @@ tokens :-
   <0>car                   { plainTok CAR }
   <0>cdr                   { plainTok CDR }
   
+  <0>\:check\-same         { plainTok CHECKSAME }
   <0>\{                    { plainTok LBRACE }
   <0>\}                    { plainTok RBRACE }
   <0>\(                    { plainTok LPAREN }

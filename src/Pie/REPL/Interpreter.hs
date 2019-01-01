@@ -47,6 +47,7 @@ eval' x = case x of
 nf x = fromMaybe x (nf <$> eval' x)
 
 eval :: Exp -> Maybe Exp
+eval (CheckSame e1 e2) = Just $ CheckSame e1 e2
 eval t = case nf t of
               nft | isVal nft -> Just nft
                   | otherwise -> Nothing -- term is "stuck"
