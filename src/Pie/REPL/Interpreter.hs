@@ -27,6 +27,7 @@ module Pie.REPL.Interpreter
 
 import Control.Applicative
 import Data.Maybe
+import Data.Either
 
 import Pie.Syntactic.AST
 

@@ -42,8 +42,12 @@ data Exp
       | AddOne Exp
       | NatLiteral Int
       | UniverseType
-      -- interpreter commands
+      -- interpreter commands (judgments)
+      | TypeOrExpr Exp
       | CheckSame Exp Exp
+      | Norm Exp
+      | NormType Exp
+      | Rep Exp
       -- recursive type just to allow wrapping with AlexPosn
       | ExpWithPosn Exp AlexPosn
       deriving (Show, Eq)

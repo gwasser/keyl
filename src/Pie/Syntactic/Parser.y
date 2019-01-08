@@ -67,7 +67,11 @@ import Pie.Syntactic.AST (Program(..), Exp(..))
       
       VAR             { L { getPos=_, unPos=VAR s } }
       
+      TYPEOREXPR      { L { getPos=_, unPos=TYPEOREXPR } }
       CHECKSAME       { L { getPos=_, unPos=CHECKSAME } }
+      NORM            { L { getPos=_, unPos=NORM } }
+      NORMTYPE        { L { getPos=_, unPos=NORMTYPE } }
+      REP             { L { getPos=_, unPos=REP } }
 
 %%
 
@@ -86,7 +90,11 @@ exp         : U                                             { ExpWithPosn (Unive
             | ZERO                                          { ExpWithPosn (Zero) (getPos $1) }
             | '(' ADDONE exp ')'                            { ExpWithPosn (AddOne $3) (getPos $1) }
             | NUM                                           { ExpWithPosn (NatLiteral (getNum $ unPos $1)) (getPos $1) }
+            | TYPEOREXPR exp                                { ExpWithPosn (TypeOrExpr $2) (getPos $1) }
             | CHECKSAME exp exp                             { ExpWithPosn (CheckSame $2 $3) (getPos $1) }
+            | NORM exp                                      { ExpWithPosn (Norm $2) (getPos $1) }
+            | NORMTYPE exp                                  { ExpWithPosn (NormType $2) (getPos $1) }
+            | REP exp                                       { ExpWithPosn (Rep $2) (getPos $1) }
 
      
 {

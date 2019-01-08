@@ -63,7 +63,12 @@ tokens :-
   <0>car                   { plainTok CAR }
   <0>cdr                   { plainTok CDR }
   
+  <0>\:type\-or\-expr      { plainTok TYPEOREXPR }
   <0>\:check\-same         { plainTok CHECKSAME }
+  <0>\:norm                { plainTok NORM }
+  <0>\:norm\-type          { plainTok NORMTYPE }
+  <0>\:rep                 { plainTok REP }
+  
   <0>\{                    { plainTok LBRACE }
   <0>\}                    { plainTok RBRACE }
   <0>\(                    { plainTok LPAREN }

@@ -31,11 +31,14 @@ data L a = L { getPos :: AlexPosn, unPos :: a } deriving (Eq, Show)
 -- |AlexPosn represents the position within the lexical stream for each token.
 data AlexPosn = AlexPosn { absolute :: Int, row :: Int, col :: Int } deriving (Eq, Show)
 
--- |A Token of the Tiger language as read by the lexer.
+-- |A Token of the Pie language as read by the lexer.
 -- Tokens consist of all keywords, punctuation, and data types
--- of the Tiger language, as well as special End of File (EOF) token.
+-- of the Pie language, as well as special End of File (EOF) token.
 -- Data type tokens have an additional constructor argument
 -- representing the value of the token.
+--
+-- Additionally to Pie, we have interpreter commands that function
+-- as logical judgments. These start with a ":".
 data Token = TEOF
            -- keywords
            | THE
@@ -65,8 +68,12 @@ data Token = TEOF
            | RBRACE 
            | RBRACKET 
            | RPAREN
-           -- interpreter commands
+           -- interpreter commands (judgments)
+           | TYPEOREXPR
            | CHECKSAME
+           | NORM
+           | NORMTYPE
+           | REP
            deriving (Eq, Show)
 
 getStr :: Token -> String
