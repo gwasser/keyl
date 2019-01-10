@@ -1,5 +1,5 @@
-pie
-===
+pie-hs
+======
 
 A Haskell implementation of Pie, a small dependently-typed language.
 
@@ -12,8 +12,8 @@ Consider this experimental research quality, not production quality. This is mor
 
 Also, consider this a work-in-progress, as many of the features described above do not exist yet.
 
-Building
---------
+Building and Running
+--------------------
 
 The Pie interpreter and library is itself written in Haskell. Aside from standard `ghc` compiler libraries, you will need `tasty` testing framework installed. To compile, you ideally will use `stack` since it can manage dependencies and the build.
 
@@ -53,4 +53,4 @@ License
 
 This software and accompanying documentation are Copyright (C) 2018 Garret Wassermann.
 
-This software distribution (including any documentation) is licensed under the GNU General Public License version 3. Please see the included COPYING file with this distribution.
+This software distribution (including any documentation) is licensed under the GNU General Public License version 3 (GNU GPLv3). Please see the included COPYING file with this distribution.
