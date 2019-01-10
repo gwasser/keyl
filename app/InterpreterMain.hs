@@ -55,7 +55,7 @@ repl ast = runInputT defaultSettings loop
   loop = do
     minput <- getInputLine "pie> "
     case minput of
-      Nothing -> outputStrLn "Goodbye."
+      Nothing -> outputStrLn "Goodbye. Hope you had fun!"
       Just input -> (liftIO $ process ast input) >> loop
 
 main :: IO ()
@@ -63,14 +63,19 @@ main = getArgs >>= parseArgs
 
 parseArgs ["-h"]         = usage   >> exit
 parseArgs ["--help"]     = usage   >> exit
-parseArgs ["-v"]         = version >> exit
-parseArgs ["--version"]  = version >> exit
-parseArgs ["--show-ast"] = version >> ctrld >> repl True
-parseArgs []             = version >> ctrld >> repl False
-parseArgs _              = error "Error parsing command line arguments"
+parseArgs ["-v"]         = version >> copyrgt >> exit
+parseArgs ["--version"]  = version >> copyrgt >> exit
+parseArgs ["--show-ast"] = stdintro >> repl True
+parseArgs []             = stdintro >> repl False
+parseArgs _              = error "Error parsing command line arguments."
 
+
+stdintro = welcome >> copyrgt >> hint >> ctrld
+welcome = putStr "Welcome to Pie " >> putStr pieVersion >> putStrLn "!"
+copyrgt = putStrLn "Copyright (C) 2019, Garret Wassermann. Licensed under GNU GPLv3."
+hint    = putStrLn "Enter Pie expressions for evaluation, or try :help."
 usage   = putStrLn "Usage: pie [-vh]"
 version = putStr "Pie interpreter " >> putStrLn pieVersion
-ctrld   = putStrLn "Type CTRL+D to exit"
+ctrld   = putStrLn "Type CTRL+D to exit."
 exit    = exitWith ExitSuccess
 die     = exitWith (ExitFailure 1)
