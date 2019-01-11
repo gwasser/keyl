@@ -40,13 +40,14 @@ This implementation is based on the Pie language presented in the book:
 
 However, the original implementation uses Racket. Therefore I consulted the following for help in implementing language interpretation using Haskell.
 
+* Tang, Jonathan, with Wikibooks contributors. _Write Yourself a Scheme in 48 Hours_. Wikibooks, 2007. <https://en.wikibooks.org/wiki/Write_Yourself_a_Scheme_in_48_Hours>.
+* Diehl, Stephen. _Write You a Haskell_ (early draft). 2015. <http://dev.stephendiehl.com/fun/>.
 * Dornan, Chris, et al. _Alex User Guide_. <https://www.haskell.org/alex/doc/html/index.html>.
 * Marlow, Simon, et al. _Happy User Guide_. <https://www.haskell.org/happy/doc/html/>.
 * Bhattacharya, Jyotirmoy. _Alex and Happy: Lexers and Parsers in Haskell_. Lean Publishing, 2015. <https://leanpub.com/alexandhappy>.
 * Aho, Alfred, et al. _Compilers: Principles, Techniques, and Tools_ (also known as "The Dragon Book"). 2nd Edition. Pearson Education, 2007.
 * Ranta, Aarne. _Implementing Programming Languages: An Introduction to Compilers and Interpreters_. College Publications, 2012.
 * Pfenning, Frank, et al. _CMU 15-411 Lecture Notes_. <https://www.cs.cmu.edu/~fp/courses/15411-f13/>.
-* Diehl, Stephen. _Write You a Haskell_. <http://dev.stephendiehl.com/fun/>.
 
 License
 -------
