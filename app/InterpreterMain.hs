@@ -27,6 +27,7 @@ import Pie.Version (pieVersion)
 import Pie.Lexical.Lexer (alexMonadScanTokens)
 import Pie.Syntactic.Parser (happyTokenParse, E(..))
 import Pie.Syntactic.AST (Program(..))
+import Pie.Parser.Combinators (runPieParser)
 import Pie.REPL.Interpreter (eval)
 import Pie.REPL.Pretty (ppexpr)
 
@@ -40,20 +41,21 @@ import System.Console.Haskeline
     
 process :: Bool -> String -> IO ()
 process ast line = do
-    let res = happyTokenParse $ alexMonadScanTokens line
+    let res = runPieParser line --happyTokenParse $ alexMonadScanTokens line
     case res of
-         Failed err -> print err
-         Ok (Program ex) -> do 
-             if ast then putStr "[ast]: " >> print ex else return ()
-             case eval ex of
+         Left err -> print err
+         Right val -> do 
+             if ast then putStr "[ast]: " >> print val else return ()
+             print val
+             {-case eval ex of
                   Nothing -> putStr "Error Evaluating: " >> putStrLn line
-                  Just result -> print $ ppexpr result
+                  Just result -> print $ ppexpr result-}
                   
 repl :: Bool -> IO ()
 repl ast = runInputT defaultSettings loop
   where
   loop = do
-    minput <- getInputLine "pie> "
+    minput <- getInputLine "pie>>> "
     case minput of
       Nothing -> outputStrLn "Goodbye. Go eat some Π!"
       Just input -> (liftIO $ process ast input) >> loop

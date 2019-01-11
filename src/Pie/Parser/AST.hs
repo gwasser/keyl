@@ -22,29 +22,29 @@
 module Pie.Parser.AST where
 
 -- a Pie program is simply an expression
-data Program = Program Exp
+data Program = Program PieExp
                 deriving (Show, Eq)
 
 -- page 392 of "The Little Typer" provides a simple grammar
-data Exp  
-      = TypeAnnotation Exp Exp
-      | VarExp String
+data PieExp  
+      = TypeAnnotation PieExp PieExp
+      | VarRef String
       | AtomType
       | AtomLiteral String
-      | PairType Exp Exp
-      | PairCons Exp Exp
-      | PairCar Exp
-      | PairCdr Exp
+      | PairType PieExp PieExp
+      | PairCons PieExp PieExp
+      | PairCar PieExp
+      | PairCdr PieExp
       | NatType
       | Zero
-      | AddOne Exp
+      | AddOne PieExp
       | NatLiteral Int
       | UniverseType
       -- interpreter commands (judgments)
-      | TypeOrExpr Exp
-      | CheckSame Exp Exp
-      | Norm Exp
-      | NormType Exp
-      | Rep Exp
+      | TypeOrExpr PieExp
+      | CheckSame PieExp PieExp
+      | Norm PieExp
+      | NormType PieExp
+      | Rep PieExp
       deriving (Show, Eq)
 

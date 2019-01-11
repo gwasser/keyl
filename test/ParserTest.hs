@@ -24,57 +24,30 @@ module ParserTest where
 import Test.Tasty (defaultMain, testGroup, TestTree)
 import Test.Tasty.HUnit (assertEqual, testCase)
 
-import Pie.Lexical.Lexer (alexMonadScanTokens, alexMonadScanTokensWithPosn)
-import Pie.Lexical.Tokens (Token(..), L(..), AlexPosn(..))
-import Pie.Syntactic.Parser (E(..), happyTokenParse, happyTokenParseWithPosn)
-import Pie.Syntactic.AST (Program(..), Exp(..))
-
 import Pie.Parser.Combinators (runPieParser)
+import Pie.Parser.AST (PieExp(..))
 
-parse = happyTokenParse . alexMonadScanTokens
-
-parseWithPosn = happyTokenParseWithPosn . alexMonadScanTokensWithPosn
-
-program = Ok . Program
 
 -- these tests are NOT necessarily valid Pie programs, but only syntactically
 -- correct constructs to exercise the parser
 
 
-parsecParserTests = testGroup "Parsec-based Pie parser" [testParsecCharPass]
-
-testParsecCharPass =
-  testCase "parses '_'" $ assertEqual [] (Right '_') (runPieParser "_")
+parsecParserTests = testGroup "Parsec-based Pie parser" [testParsecAtomLiteral, testParsecAtomLiteralWS, testParsecNatLiteral, testParsecNatLiteralWS, testParsecVarRef, testParsecVarRefWS]
   
-
-
-happyParserTests = testGroup "Happy-based Pie parser" [testParserAtomTypeWithPosn, testParserAtomType, testParserAtomAtom, testParserPairAtomNat, testParserConsAtoms, testParserCarCdrCons, testParserAddOneZero, testParserAddOne42, testParserTheAtomIsU]
-
-testParserAtomTypeWithPosn =
-  testCase "parses 'Atom' with position data" $ assertEqual [] (program (ExpWithPosn AtomType (AlexPosn { row=1, col=1, absolute=1 }))) (parseWithPosn "Atom")
+testParsecAtomLiteral =
+  testCase "parses 'atom" $ assertEqual [] (Right $ AtomLiteral "'atom") (runPieParser "'atom")
   
-testParserAtomType =
-  testCase "parses 'Atom'" $ assertEqual [] (program AtomType) (parse "Atom")
+testParsecAtomLiteralWS =
+  testCase "parses 'atom with whitespace" $ assertEqual [] (Right $ AtomLiteral "'atom") (runPieParser "  'atom")
   
-testParserAtomAtom =
-  testCase "parses ''atom'" $ assertEqual [] (program (AtomLiteral "atom")) (parse "'atom")
+testParsecNatLiteral =
+  testCase "parses 412" $ assertEqual [] (Right $ NatLiteral 412) (runPieParser "412")
   
-testParserPairAtomNat =
-  testCase "parses '(Pair Atom Nat)'" $ assertEqual [] (program (PairType AtomType NatType)) (parse "(Pair Atom Nat)")
-  
-testParserConsAtoms =
-  testCase "parses '(cons 'alice 'bob)'" $ assertEqual [] (program (PairCons (AtomLiteral "alice") (AtomLiteral "bob"))) (parse "(cons 'alice 'bob)")
-
-testParserCarCdrCons =
-  testCase "parses '(cons (car (cons 'alice 'bob)) (cdr x))'" $ assertEqual [] (program (PairCons (PairCar (PairCons (AtomLiteral "alice") (AtomLiteral "bob"))) (PairCdr $ VarExp "x"))) (parse "(cons (car (cons 'alice 'bob)) (cdr x))")
-
-testParserAddOneZero =
-  testCase "parses '(add1 zero)'" $ assertEqual [] (program (AddOne Zero)) (parse "(add1 zero)")
-  
-testParserAddOne42 =
-  testCase "parses '(add1 42)'" $ assertEqual [] (program (AddOne (NatLiteral 42))) (parse "(add1 42)")
-  
-testParserTheAtomIsU =
-  testCase "parses '(the 'some-atom U)'" $ assertEqual [] (program (TypeAnnotation (AtomLiteral "some-atom") (UniverseType))) (parse "(the 'some-atom U)")
+testParsecNatLiteralWS =
+  testCase "parses 412 with whitespace" $ assertEqual [] (Right $ NatLiteral 412) (runPieParser "  412")
                                                                                                                                                                                                                                                         
-                             
+testParsecVarRef =
+  testCase "parses xs" $ assertEqual [] (Right $ VarRef "xs") (runPieParser "xs")
+  
+testParsecVarRefWS =
+  testCase "parses xs with whitespace" $ assertEqual [] (Right $ VarRef "xs") (runPieParser "  xs")

@@ -21,19 +21,47 @@
 
 module Pie.Parser.Combinators (runPieParser) where
 
+import Pie.Parser.AST (PieExp(..))
+
 -- Based on "Write Yourself a Scheme in 48 Hours", but using the new
 -- Parsec 3 API rather than the older 2 API (Text.ParserCombinators.Parsec)
 -- that is common in most tutorials such as that one.
 import Text.Parsec (runParser)
 import Text.Parsec.String (Parser) -- also use parseFromFile
-import Text.Parsec.Char (anyChar, oneOf)
-import Text.Parsec.Combinator (many1)
+import Text.Parsec.Char (char, space, spaces, lower, digit)
+import Text.Parsec (many, (<|>))
+import Text.Parsec.Combinator (many1, skipMany1)
+
+import Control.Monad (liftM)
 
 -- top parsing function for one expression at a time
-runPieParser input = runParser symbol () "filename" input
+runPieParser input = runParser pieExpr () "user input" input
+    where pieExpr =  parseAtom
+                 <|> parseNat
+                 <|> parseVar
 
--- symbols allowed in identifiers
-symbol :: Parser Char
-symbol = oneOf "'-_"
+-- an atom is a ' followed by lowercase letters or hyphen
+parseAtom :: Parser PieExp
+parseAtom = do spaces
+               first <- char '\''
+               rest <- many (lower <|> char '-')
+               let atom = [first] ++ rest
+               return $ AtomLiteral atom
       
+-- a nat is a natural number read in as digits
+-- (rather than the successor definition)
+parseNat :: Parser PieExp
+--parseNat = liftM (NatLiteral . read) $ many1 digit
+parseNat = do spaces
+              num <- many1 digit
+              return $ (NatLiteral . read) num
 
+-- a variable is lowercase letters or hyphens but not an atom,
+-- references a previously-bound value
+parseVar :: Parser PieExp
+parseVar = liftM VarRef $ many (lower <|> char '-')
+
+-- matches at least 1 whitespace character;
+-- the builtin spaces matches 0 or more
+spaces1 :: Parser ()
+spaces1 = skipMany1 space

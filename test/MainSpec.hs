@@ -23,9 +23,9 @@ module Main where
 
 import Test.Tasty (defaultMain, testGroup, TestTree)
 
-import ParserTest (happyParserTests, parsecParserTests)
+import ParserTest (parsecParserTests)
 
 main = defaultMain tests
 
 tests :: TestTree
-tests = testGroup "All Unit Tests" [parsecParserTests, happyParserTests]
+tests = testGroup "All Unit Tests" [parsecParserTests]
