@@ -29,6 +29,8 @@ import Pie.Lexical.Tokens (Token(..), L(..), AlexPosn(..))
 import Pie.Syntactic.Parser (E(..), happyTokenParse, happyTokenParseWithPosn)
 import Pie.Syntactic.AST (Program(..), Exp(..))
 
+import Pie.Parser.Combinators (runPieParser)
+
 parse = happyTokenParse . alexMonadScanTokens
 
 parseWithPosn = happyTokenParseWithPosn . alexMonadScanTokensWithPosn
@@ -37,7 +39,16 @@ program = Ok . Program
 
 -- these tests are NOT necessarily valid Pie programs, but only syntactically
 -- correct constructs to exercise the parser
-parserTests = testGroup "Happy-based Pie parser" [testParserAtomTypeWithPosn, testParserAtomType, testParserAtomAtom, testParserPairAtomNat, testParserConsAtoms, testParserCarCdrCons, testParserAddOneZero, testParserAddOne42, testParserTheAtomIsU]
+
+
+parsecParserTests = testGroup "Parsec-based Pie parser" [testParsecCharPass]
+
+testParsecCharPass =
+  testCase "parses '_'" $ assertEqual [] (Right '_') (runPieParser "_")
+  
+
+
+happyParserTests = testGroup "Happy-based Pie parser" [testParserAtomTypeWithPosn, testParserAtomType, testParserAtomAtom, testParserPairAtomNat, testParserConsAtoms, testParserCarCdrCons, testParserAddOneZero, testParserAddOne42, testParserTheAtomIsU]
 
 testParserAtomTypeWithPosn =
   testCase "parses 'Atom' with position data" $ assertEqual [] (program (ExpWithPosn AtomType (AlexPosn { row=1, col=1, absolute=1 }))) (parseWithPosn "Atom")

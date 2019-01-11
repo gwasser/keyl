@@ -1,5 +1,5 @@
 {-
-    Copyright (C) 2018, Garret Wassermann.
+    Copyright (C) 2019, Garret Wassermann.
 
     This file is part of pie, the Pie language compiler,
     based on the Pie language in "The Little Typer",
@@ -19,13 +19,32 @@
     along with pie. If not, see <http://www.gnu.org/licenses/>.
 -}
 
-module Main where
+module Pie.Parser.AST where
 
-import Test.Tasty (defaultMain, testGroup, TestTree)
+-- a Pie program is simply an expression
+data Program = Program Exp
+                deriving (Show, Eq)
 
-import ParserTest (happyParserTests, parsecParserTests)
+-- page 392 of "The Little Typer" provides a simple grammar
+data Exp  
+      = TypeAnnotation Exp Exp
+      | VarExp String
+      | AtomType
+      | AtomLiteral String
+      | PairType Exp Exp
+      | PairCons Exp Exp
+      | PairCar Exp
+      | PairCdr Exp
+      | NatType
+      | Zero
+      | AddOne Exp
+      | NatLiteral Int
+      | UniverseType
+      -- interpreter commands (judgments)
+      | TypeOrExpr Exp
+      | CheckSame Exp Exp
+      | Norm Exp
+      | NormType Exp
+      | Rep Exp
+      deriving (Show, Eq)
 
-main = defaultMain tests
-
-tests :: TestTree
-tests = testGroup "All Unit Tests" [parsecParserTests, happyParserTests]

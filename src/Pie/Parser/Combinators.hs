@@ -1,5 +1,5 @@
 {-
-    Copyright (C) 2018, Garret Wassermann.
+    Copyright (C) 2019, Garret Wassermann.
 
     This file is part of pie, the Pie language compiler,
     based on the Pie language in "The Little Typer",
@@ -19,13 +19,21 @@
     along with pie. If not, see <http://www.gnu.org/licenses/>.
 -}
 
-module Main where
+module Pie.Parser.Combinators (runPieParser) where
 
-import Test.Tasty (defaultMain, testGroup, TestTree)
+-- Based on "Write Yourself a Scheme in 48 Hours", but using the new
+-- Parsec 3 API rather than the older 2 API (Text.ParserCombinators.Parsec)
+-- that is common in most tutorials such as that one.
+import Text.Parsec (runParser)
+import Text.Parsec.String (Parser) -- also use parseFromFile
+import Text.Parsec.Char (anyChar, oneOf)
+import Text.Parsec.Combinator (many1)
 
-import ParserTest (happyParserTests, parsecParserTests)
+-- top parsing function for one expression at a time
+runPieParser input = runParser symbol () "filename" input
 
-main = defaultMain tests
+-- symbols allowed in identifiers
+symbol :: Parser Char
+symbol = oneOf "'-_"
+      
 
-tests :: TestTree
-tests = testGroup "All Unit Tests" [parsecParserTests, happyParserTests]

@@ -19,6 +19,8 @@ library
                        Pie.Lexical.Tokens,
                        Pie.Syntactic.Parser,
                        Pie.Syntactic.AST,
+                       Pie.Parser.AST,
+                       Pie.Parser.Combinators,
                        Pie.REPL.Pretty,
                        Pie.REPL.Interpreter,
                        Pie.Version
@@ -28,7 +30,8 @@ library
                        containers,
                        transformers,
                        mtl,
-                       pretty
+                       pretty,
+                       parsec
   build-tools:         alex,
                        happy
   default-language:    Haskell2010
@@ -46,8 +49,7 @@ executable pie
 test-suite pie-test
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
-  other-modules:       LexerTest,
-                       ParserTest
+  other-modules:       ParserTest
   main-is:             MainSpec.hs
   build-depends:       base,
                        tasty,
