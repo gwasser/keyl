@@ -28,22 +28,27 @@ import Pie.Parser.AST (PieExp(..))
 -- that is common in most tutorials such as that one.
 import Text.Parsec (runParser)
 import Text.Parsec.String (Parser) -- also use parseFromFile
-import Text.Parsec.Char (char, space, spaces, lower, digit)
-import Text.Parsec (many, (<|>))
+import Text.Parsec.Char (char, space, spaces, lower, digit, string)
+import Text.Parsec (try, many, sepBy, (<|>))
 import Text.Parsec.Combinator (many1, skipMany1)
 
 import Control.Monad (liftM)
 
 -- top parsing function for one expression at a time
 runPieParser input = runParser pieExpr () "user input" input
-    where pieExpr =  parseAtom
-                 <|> parseNat
-                 <|> parseVar
+
+-- possible expressions
+pieExpr :: Parser PieExp
+pieExpr =  parseAtom
+       <|> parseNat
+       <|> parseVar
+       <|> parseAtomType
+       <|> try parsePairCons
+       <|> try parsePairType
 
 -- an atom is a ' followed by lowercase letters or hyphen
 parseAtom :: Parser PieExp
-parseAtom = do spaces
-               first <- char '\''
+parseAtom = do first <- char '\''
                rest <- many (lower <|> char '-')
                let atom = [first] ++ rest
                return $ AtomLiteral atom
@@ -51,15 +56,29 @@ parseAtom = do spaces
 -- a nat is a natural number read in as digits
 -- (rather than the successor definition)
 parseNat :: Parser PieExp
---parseNat = liftM (NatLiteral . read) $ many1 digit
-parseNat = do spaces
-              num <- many1 digit
-              return $ (NatLiteral . read) num
+parseNat = liftM (NatLiteral . read) $ many1 digit
 
 -- a variable is lowercase letters or hyphens but not an atom,
 -- references a previously-bound value
 parseVar :: Parser PieExp
-parseVar = liftM VarRef $ many (lower <|> char '-')
+parseVar = liftM VarRef $ many1 (lower <|> char '-')
+
+-- parsing builtin types
+parseAtomType = string "Atom" >> return AtomType
+
+-- a cons expression
+parsePairCons = parseParens "cons" (\x y -> PairCons x y)
+parsePairType = parseParens "Pair" (\x y -> PairType x y)
+
+parseParens :: String -> (PieExp -> PieExp -> PieExp) -> Parser PieExp
+parseParens token expr = do char '('
+                            string token
+                            spaces1
+                            x <- pieExpr
+                            spaces1
+                            y <- pieExpr
+                            char ')'
+                            return $ expr x y
 
 -- matches at least 1 whitespace character;
 -- the builtin spaces matches 0 or more

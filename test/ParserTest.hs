@@ -32,7 +32,7 @@ import Pie.Parser.AST (PieExp(..))
 -- correct constructs to exercise the parser
 
 
-parsecParserTests = testGroup "Parsec-based Pie parser" [testParsecAtomLiteral, testParsecAtomLiteralWS, testParsecNatLiteral, testParsecNatLiteralWS, testParsecVarRef, testParsecVarRefWS]
+parsecParserTests = testGroup "Parsec-based Pie parser" [testParsecAtomLiteral, testParsecNatLiteral, testParsecVarRef, testParsecAtomType, testParsecConsAtom, testParsecPairTypeAtom]
   
 testParsecAtomLiteral =
   testCase "parses 'atom" $ assertEqual [] (Right $ AtomLiteral "'atom") (runPieParser "'atom")
@@ -51,3 +51,12 @@ testParsecVarRef =
   
 testParsecVarRefWS =
   testCase "parses xs with whitespace" $ assertEqual [] (Right $ VarRef "xs") (runPieParser "  xs")
+  
+testParsecAtomType =
+  testCase "parses Atom" $ assertEqual [] (Right $ AtomType) (runPieParser "Atom")
+  
+testParsecConsAtom =
+  testCase "parses (cons 'one 'two)" $ assertEqual [] (Right $ PairCons (AtomLiteral "'one") (AtomLiteral "'two")) (runPieParser "(cons 'one 'two)")
+  
+testParsecPairTypeAtom =
+  testCase "parses (Pair Atom Atom)" $ assertEqual [] (Right $ PairType AtomType AtomType) (runPieParser "(Pair Atom Atom)")
