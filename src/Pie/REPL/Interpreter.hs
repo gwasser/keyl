@@ -29,15 +29,15 @@ import Control.Applicative
 import Data.Maybe
 import Data.Either
 
-import Pie.Syntactic.AST
+import Pie.Parser.AST
 
-isNum :: Exp -> Bool
+isNum :: PieExp -> Bool
 isNum Zero = True
 isNum (AddOne t) = isNum t
 isNum _ = False
 
 
-isVal :: Exp -> Bool
+isVal :: PieExp -> Bool
 isVal t | isNum t = True
 isVal _ = False
 
@@ -47,7 +47,7 @@ eval' x = case x of
                
 nf x = fromMaybe x (nf <$> eval' x)
 
-eval :: Exp -> Maybe Exp
+eval :: PieExp -> Maybe PieExp
 eval (CheckSame e1 e2) = Just $ CheckSame e1 e2
 eval t = case nf t of
               nft | isVal nft -> Just nft

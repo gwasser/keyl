@@ -15,11 +15,7 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Pie.Lexical.Lexer,
-                       Pie.Lexical.Tokens,
-                       Pie.Syntactic.Parser,
-                       Pie.Syntactic.AST,
-                       Pie.Parser.AST,
+  exposed-modules:     Pie.Parser.AST,
                        Pie.Parser.Combinators,
                        Pie.REPL.Pretty,
                        Pie.REPL.Interpreter,
@@ -32,8 +28,6 @@ library
                        mtl,
                        pretty,
                        parsec
-  build-tools:         alex,
-                       happy
   default-language:    Haskell2010
 
 executable pie

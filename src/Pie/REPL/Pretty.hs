@@ -25,7 +25,7 @@ module Pie.REPL.Pretty (
   ppexpr
 ) where
 
-import Pie.Syntactic.AST
+import Pie.Parser.AST
 
 import Text.PrettyPrint (Doc, (<>), (<+>))
 import qualified Text.PrettyPrint as PP
@@ -37,12 +37,12 @@ parensIf False = id
 class Pretty p where
   ppr :: Int -> p -> Doc
 
-instance Pretty Exp where
+instance Pretty PieExp where
   ppr _ Zero = PP.text "0"
   ppr p (AddOne a) = (parensIf (p > 0) $ PP.text "add1" <+> ppr (p+1) a)
   ppr p (AtomType) = PP.text "Atom"
   ppr p (AtomLiteral s) = PP.text "'" <+> PP.text s
   ppr p (CheckSame e1 e2) = (parensIf (p > 0) $ PP.text ":check-same" <+> ppr (p+1) e1 <+> ppr (p+1) e2)
 
-ppexpr :: Exp -> String
+ppexpr :: PieExp -> String
 ppexpr = PP.render . ppr 1 

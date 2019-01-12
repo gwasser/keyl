@@ -24,9 +24,7 @@ module Main where
 
 -- pie modules
 import Pie.Version (pieVersion)
-import Pie.Lexical.Lexer (alexMonadScanTokens)
-import Pie.Syntactic.Parser (happyTokenParse, E(..))
-import Pie.Syntactic.AST (Program(..))
+import Pie.Parser.AST (Program(..))
 import Pie.Parser.Combinators (runPieParser)
 import Pie.REPL.Interpreter (eval)
 import Pie.REPL.Pretty (ppexpr)
