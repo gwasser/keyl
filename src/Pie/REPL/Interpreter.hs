@@ -29,7 +29,7 @@ import Control.Applicative
 import Data.Maybe
 import Data.Either
 
-import Pie.Parser.AST
+import Pie.Core.AST
 
 isNum :: PieExp -> Bool
 isNum Zero = True

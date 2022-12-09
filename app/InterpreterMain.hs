@@ -24,7 +24,7 @@ module Main where
 
 -- pie modules
 import Pie.Version (pieVersion)
-import Pie.Parser.AST (Program(..))
+import Pie.Core.AST (Program(..))
 import Pie.Parser.Combinators (runPieParser)
 import Pie.REPL.Interpreter (eval)
 import Pie.REPL.Pretty (ppexpr)

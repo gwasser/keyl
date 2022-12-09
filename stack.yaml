@@ -15,7 +15,7 @@
 # resolver:
 #  name: custom-snapshot
 #  location: "./custom-snapshot.yaml"
-resolver: ghc-8.6.3 # based on lts-13.0
+resolver: ghc-9.2
 
 # User packages to be built.
 # Various formats can be used as shown in the example below.
@@ -39,7 +39,8 @@ packages:
 - '.'
 # Dependency packages to be pulled from upstream that are not in the resolver
 # (e.g., acme-missiles-0.3)
-extra-deps: [alex-3.2.4, happy-1.19.9]
+extra-deps: [alex-3.2.4, happy-1.19.9, utf8-string-1.0.1.1,
+             tasty-1.4.2.3, tasty-hunit-0.10.0.3, ansi-terminal-0.11.4, async-2.2.2, clock-0.8.3, optparse-applicative-0.17.0.0, tagged-0.8.6.1, unbounded-delays-0.1.1.1, wcwidth-0.0.2, call-stack-0.4.0, colour-2.3.6, ansi-wl-pprint-0.6.9, transformers-compat-0.7.2, strict-data-0.2.0.2, hashable-1.3.0.0]
 allow-newer: true
 
 # Override default flag values for local packages and extra-deps

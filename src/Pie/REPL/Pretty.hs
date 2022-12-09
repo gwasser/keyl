@@ -25,7 +25,7 @@ module Pie.REPL.Pretty (
   ppexpr
 ) where
 
-import Pie.Parser.AST
+import Pie.Core.AST
 
 import Text.PrettyPrint (Doc, (<>), (<+>))
 import qualified Text.PrettyPrint as PP

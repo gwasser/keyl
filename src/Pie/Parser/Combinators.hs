@@ -21,7 +21,7 @@
 
 module Pie.Parser.Combinators (runPieParser) where
 
-import Pie.Parser.AST (PieExp(..))
+import Pie.Core.AST (PieExp(..))
 
 -- Based on "Write Yourself a Scheme in 48 Hours", but using the new
 -- Parsec 3 API rather than the older 2 API (Text.ParserCombinators.Parsec)

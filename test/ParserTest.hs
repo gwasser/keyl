@@ -25,7 +25,7 @@ import Test.Tasty (defaultMain, testGroup, TestTree)
 import Test.Tasty.HUnit (assertEqual, testCase)
 
 import Pie.Parser.Combinators (runPieParser)
-import Pie.Parser.AST (PieExp(..))
+import Pie.Core.AST (PieExp(..))
 
 
 -- these tests are NOT necessarily valid Pie programs, but only syntactically

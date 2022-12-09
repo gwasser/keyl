@@ -15,7 +15,8 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Pie.Parser.AST,
+  exposed-modules:     Pie.Core.AST,
+                       Pie.Core.Context,
                        Pie.Parser.Combinators,
                        Pie.REPL.Pretty,
                        Pie.REPL.Interpreter,

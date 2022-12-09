@@ -19,7 +19,7 @@
     along with pie. If not, see <http://www.gnu.org/licenses/>.
 -}
 
-module Pie.Parser.AST where
+module Pie.Core.AST where
 
 -- a Pie program is simply an expression
 data Program = Program PieExp

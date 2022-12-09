@@ -19,10 +19,10 @@
     along with pie. If not, see <http://www.gnu.org/licenses/>.
 -}
 
-module Pie.Parser.Context where
+module Pie.Core.Context where
 
 import qualified Data.Map.Strict as Map
-import Pie.Parser.AST
+import Pie.Core.AST
 
 -- A Context is a map of keys -> values,
 -- where keys are variable identifiers and
@@ -33,12 +33,14 @@ type Context = Map.Map String Binder
 -- (1) a Free binder represents a free variable, bound in a larger context
 -- (2) a Def binder represents a name bound by a define expression
 -- (3) a Claim binder represents a reserved claim, but a name isn't bound
-data Binder = Free PieExpr
-            | Def PieExpr PieExpr -- represents type and a value
-            | Claim PieExpr
+data Binder = Free PieExp
+            | Def PieExp PieExp -- represents type and a value
+            | Claim PieExp
 
 -- rename some common functions so don't need to always import Map
+ctxInsert :: Ord k => k -> a -> Map.Map k a -> Map.Map k a
 ctxInsert = Map.insert
+ctxLookup :: Ord k => k -> Map.Map k a -> Maybe a
 ctxLookup = Map.lookup
 
 
