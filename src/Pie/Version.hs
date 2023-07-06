@@ -19,9 +19,11 @@
     along with pie. If not, see <http://www.gnu.org/licenses/>.
 -}
 
+{-# LANGUAGE OverloadedStrings #-}
+
 module Pie.Version (
   pieVersion
-) where 
+) where
 
 -- be sure to keep this updated with the README!
-pieVersion = "0.1.0.0"
+pieVersion = "0.2.0.0"

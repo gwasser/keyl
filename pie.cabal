@@ -1,5 +1,5 @@
 name:                pie
-version:             0.1.0.0
+version:             0.2.0.0
 synopsis:            Pie - A Small Dependent Type Language
 description:         Please see README.md
 homepage:            https://gitlab.com/gwasser/pie#readme
@@ -7,7 +7,7 @@ license:             GPL-3
 license-file:        COPYING
 author:              Garret Wassermann
 maintainer:          geewass@member.fsf.org
-copyright:           2018 Garret Wassermann
+copyright:           2023 Garret Wassermann
 category:            Development
 build-type:          Simple
 extra-source-files:  README.md
@@ -23,6 +23,7 @@ library
                        Pie.Version
   build-depends:       base,
                        utf8-string,
+                       text,
                        array,
                        containers,
                        transformers,
@@ -35,6 +36,7 @@ executable pie
   hs-source-dirs:      app
   main-is:             InterpreterMain.hs
   build-depends:       base,
+                       text,
                        mtl,
                        haskeline,
                        pie

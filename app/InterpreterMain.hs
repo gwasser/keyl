@@ -1,5 +1,5 @@
 {-
-    Copyright (C) 2018, Garret Wassermann.
+    Copyright (C) 2023, Garret Wassermann.
 
     This file is part of pie, the Pie language compiler,
     based on the Pie language in "The Little Typer",
@@ -19,6 +19,7 @@
     along with pie. If not, see <http://www.gnu.org/licenses/>.
 -}
 
+{-# LANGUAGE OverloadedStrings #-}
 
 module Main where
 
@@ -33,6 +34,12 @@ import Pie.REPL.Pretty (ppexpr)
 import System.Environment
 import System.Exit
 import System.IO
+
+-- use Text instead of String
+-- when needed use the following functions:
+-- T.pack :: String -> Text
+-- T.unpack :: Text -> String
+import Data.Text as T
 
 import Control.Monad.Trans
 import System.Console.Haskeline
@@ -72,7 +79,7 @@ parseArgs _              = error "Error parsing command line arguments."
 
 stdintro = welcome >> copyrgt >> hint >> ctrld
 welcome = putStr "Welcome to Pie " >> putStr pieVersion >> putStrLn " - the little dependently-typed language!"
-copyrgt = putStrLn "Copyright (C) 2019, Garret Wassermann. Licensed under GNU GPLv3."
+copyrgt = putStrLn "Copyright (C) 2023, Garret Wassermann. Licensed under GNU GPLv3."
 hint    = putStrLn "Enter Pie expressions for evaluation, or try :help."
 usage   = putStrLn "Usage: pie [-vh]"
 version = putStr "Pie interpreter " >> putStrLn pieVersion

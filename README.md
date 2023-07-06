@@ -38,8 +38,14 @@ This implementation is based on the Pie language presented in the book:
 
 * Friedman and Christiansen. _The Little Typer_. MIT Press, 2018.
 
-However, the original implementation uses Racket. Therefore I consulted the following for help in implementing language interpretation using Haskell.
+Which references the following related books on Scheme:
 
+* Friedman and Felleisen. _The Little Schemer_, 4th Edition. MIT Press, 1996.
+* Friedman and Felleisen. _The Seasoned Schemer_. MIT Press, 1996.
+
+However, the original implementation of Pie provided by the book authors uses Racket. Therefore I consulted the following for help in implementing language interpretation using Haskell.
+
+* Wespiser, Adam. _Write You A Scheme, Version 2.0_. 2016. <https://wespiser.com/writings/wyas/00_overview.html>.
 * Tang, Jonathan, with Wikibooks contributors. _Write Yourself a Scheme in 48 Hours_. Wikibooks, 2007. <https://en.wikibooks.org/wiki/Write_Yourself_a_Scheme_in_48_Hours>.
 * Diehl, Stephen. _Write You a Haskell_ (early draft). 2015. <http://dev.stephendiehl.com/fun/>.
 * Dornan, Chris, et al. _Alex User Guide_. <https://www.haskell.org/alex/doc/html/index.html>.
@@ -52,6 +58,6 @@ However, the original implementation uses Racket. Therefore I consulted the foll
 License
 -------
 
-This software and accompanying documentation are Copyright (C) 2018 Garret Wassermann.
+This software and accompanying documentation are Copyright (C) 2023 Garret Wassermann.
 
 This software distribution (including any documentation) is licensed under the GNU General Public License version 3 (GNU GPLv3). Please see the included COPYING file with this distribution.
