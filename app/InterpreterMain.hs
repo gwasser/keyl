@@ -1,29 +1,29 @@
 {-
     Copyright (C) 2023, Garret Wassermann.
 
-    This file is part of pie, the Pie language compiler,
+    This file is part of keyl, the Pie language compiler,
     based on the Pie language in "The Little Typer",
     by Daniel P. Friedman and David Thrane Christiansen.
 
-    pie is free software: you can redistribute it and/or modify
+    keyl is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
 
-    pie is distributed in the hope that it will be useful,
+    keyl is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with pie. If not, see <http://www.gnu.org/licenses/>.
+    along with keyl. If not, see <http://www.gnu.org/licenses/>.
 -}
 
 {-# LANGUAGE OverloadedStrings #-}
 
 module Main where
 
--- pie modules
+-- keyl modules
 import Pie.Version (pieVersion)
 import Pie.Core.AST (Program(..))
 import Pie.Parser.Combinators (runPieParser)
@@ -60,7 +60,7 @@ repl :: Bool -> IO ()
 repl ast = runInputT defaultSettings loop
   where
   loop = do
-    minput <- getInputLine "pie>>> "
+    minput <- getInputLine "Π> "
     case minput of
       Nothing -> outputStrLn "Goodbye. Go eat some Π!"
       Just input -> (liftIO $ process ast input) >> loop
@@ -81,8 +81,8 @@ stdintro = welcome >> copyrgt >> hint >> ctrld
 welcome = putStr "Welcome to Pie " >> putStr pieVersion >> putStrLn " - the little dependently-typed language!"
 copyrgt = putStrLn "Copyright (C) 2023, Garret Wassermann. Licensed under GNU GPLv3."
 hint    = putStrLn "Enter Pie expressions for evaluation, or try :help."
-usage   = putStrLn "Usage: pie [-vh]"
-version = putStr "Pie interpreter " >> putStrLn pieVersion
+usage   = putStrLn "Usage: keyl [-vh]"
+version = putStr "keyl, the Pie interpreter " >> putStrLn pieVersion
 ctrld   = putStrLn "Type CTRL+D to exit."
 exit    = exitWith ExitSuccess
 die     = exitWith (ExitFailure 1)
