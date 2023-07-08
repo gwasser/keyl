@@ -25,6 +25,10 @@ module Pie.Parser.Combinators (runPieParser) where
 
 import Pie.Core.AST (PieExp(..))
 
+-- Use Text instead of String
+import Data.Text as T
+import Data.Text (Text)
+
 -- Based on "Write Yourself a Scheme in 48 Hours", but using the new
 -- Parsec 3 API rather than the older 2 API (Text.ParserCombinators.Parsec)
 -- that is common in most tutorials such as that one.
@@ -52,7 +56,7 @@ pieExpr =  parseAtom
 parseAtom :: Parser PieExp
 parseAtom = do first <- char '\''
                rest <- many (lower <|> char '-')
-               let atom = [first] ++ rest
+               let atom = T.pack $ [first] ++ rest
                return $ AtomLiteral atom
       
 -- a nat is a natural number read in as digits
@@ -63,7 +67,7 @@ parseNat = liftM (NatLiteral . read) $ many1 digit
 -- a variable is lowercase letters or hyphens but not an atom,
 -- references a previously-bound value
 parseVar :: Parser PieExp
-parseVar = liftM VarRef $ many1 (lower <|> char '-')
+parseVar = liftM (VarRef . T.pack) $ many1 (lower <|> char '-')
 
 -- parsing builtin types
 parseAtomType = string "Atom" >> return AtomType

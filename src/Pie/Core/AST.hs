@@ -23,6 +23,9 @@
 
 module Pie.Core.AST where
 
+import Data.Text as T
+import Data.Text (Text)
+
 -- a Pie program is simply an expression
 data Program = Program PieExp
                 deriving (Show, Eq)
@@ -30,9 +33,9 @@ data Program = Program PieExp
 -- page 392 of "The Little Typer" provides a simple grammar
 data PieExp  
       = TypeAnnotation PieExp PieExp
-      | VarRef String
+      | VarRef Text
       | AtomType
-      | AtomLiteral String
+      | AtomLiteral Text
       | PairType PieExp PieExp
       | PairCons PieExp PieExp
       | PairCar PieExp

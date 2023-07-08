@@ -21,13 +21,16 @@
 
 {-# LANGUAGE OverloadedStrings #-}
 
-
 {- Based on the NanoParsec parser in "Write You a Haskell" by Stephen Diehl -}
 module Pie.REPL.Pretty (
   ppexpr
 ) where
 
 import Pie.Core.AST
+
+-- Use Text instead of String
+import Data.Text as T
+import Data.Text (Text)
 
 import Text.PrettyPrint (Doc, (<>), (<+>))
 import qualified Text.PrettyPrint as PP
@@ -43,7 +46,7 @@ instance Pretty PieExp where
   ppr _ Zero = PP.text "0"
   ppr p (AddOne a) = (parensIf (p > 0) $ PP.text "add1" <+> ppr (p+1) a)
   ppr p (AtomType) = PP.text "Atom"
-  ppr p (AtomLiteral s) = PP.text "'" <+> PP.text s
+  ppr p (AtomLiteral s) = PP.text "'" <+> PP.text (T.unpack s)
   ppr p (CheckSame e1 e2) = (parensIf (p > 0) $ PP.text ":check-same" <+> ppr (p+1) e1 <+> ppr (p+1) e2)
 
 ppexpr :: PieExp -> String
