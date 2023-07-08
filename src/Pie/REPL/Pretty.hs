@@ -49,5 +49,5 @@ instance Pretty PieExp where
   ppr p (AtomLiteral s) = PP.text "'" <+> PP.text (T.unpack s)
   ppr p (CheckSame e1 e2) = (parensIf (p > 0) $ PP.text ":check-same" <+> ppr (p+1) e1 <+> ppr (p+1) e2)
 
-ppexpr :: PieExp -> String
-ppexpr = PP.render . ppr 1 
+ppexpr :: PieExp -> Text
+ppexpr = T.pack . PP.render . ppr 1

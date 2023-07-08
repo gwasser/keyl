@@ -23,8 +23,12 @@
 
 module Main where
 
+-- import keyl version from stack/cabal project file
+import Data.Version ( showVersion )
+import Paths_keyl ( version )
+
 -- keyl modules
-import Pie.Version (pieVersion)
+--import Pie.Version (pieVersion)
 import Pie.Core.AST (Program(..))
 import Pie.Parser.Combinators (runPieParser)
 import Pie.REPL.Interpreter (eval)
@@ -40,9 +44,13 @@ import System.IO
 -- T.pack :: String -> Text
 -- T.unpack :: Text -> String
 import Data.Text as T
+import Data.Text (Text)
 
 import Control.Monad.Trans
 import System.Console.Haskeline
+
+pieVersion :: Text
+pieVersion = T.pack $ showVersion version
     
 process :: Bool -> String -> IO ()
 process ast line = do
@@ -70,19 +78,19 @@ main = getArgs >>= parseArgs
 
 parseArgs ["-h"]         = usage   >> exit
 parseArgs ["--help"]     = usage   >> exit
-parseArgs ["-v"]         = version >> copyrgt >> exit
-parseArgs ["--version"]  = version >> copyrgt >> exit
+parseArgs ["-v"]         = ver >> copyrgt >> exit
+parseArgs ["--version"]  = ver >> copyrgt >> exit
 parseArgs ["--show-ast"] = stdintro >> repl True
 parseArgs []             = stdintro >> repl False
 parseArgs _              = error "Error parsing command line arguments."
 
 
 stdintro = welcome >> copyrgt >> hint >> ctrld
-welcome = putStr "Welcome to Pie " >> putStr pieVersion >> putStrLn " - the little dependently-typed language!"
+welcome = putStr "Welcome to Pie " >> putStr (show pieVersion) >> putStrLn " - the little dependently-typed language!"
 copyrgt = putStrLn "Copyright (C) 2023, Garret Wassermann. Licensed under GNU GPLv3."
 hint    = putStrLn "Enter Pie expressions for evaluation, or try :help."
 usage   = putStrLn "Usage: keyl [-vh]"
-version = putStr "keyl, the Pie interpreter " >> putStrLn pieVersion
+ver     = putStr "keyl, the Pie interpreter - version " >> putStrLn (show pieVersion)
 ctrld   = putStrLn "Type CTRL+D to exit."
 exit    = exitWith ExitSuccess
 die     = exitWith (ExitFailure 1)
