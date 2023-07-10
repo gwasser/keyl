@@ -19,8 +19,7 @@ library
                        Pie.Core.Context,
                        Pie.Parser.Combinators,
                        Pie.REPL.Pretty,
-                       Pie.REPL.Interpreter,
-                       Pie.Version
+                       Pie.REPL.Interpreter
   build-depends:       base,
                        utf8-string,
                        text,
