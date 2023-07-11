@@ -1,6 +1,5 @@
 .stack-work/
 dist-*/
-stack.yaml.lock
 .directory
 *.hi
 *.o
