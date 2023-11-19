@@ -86,7 +86,7 @@ parseArgs _              = error "Error parsing command line arguments."
 
 
 stdintro = welcome >> copyrgt >> hint >> ctrld
-welcome = putStr "Welcome to Pie " >> putStr (show pieVersion) >> putStrLn " - the little dependently-typed language!"
+welcome = putStr "Welcome to Pie - the little dependently-typed language!"
 copyrgt = putStrLn "Copyright (C) 2023, Garret Wassermann. Licensed under GNU GPLv3."
 hint    = putStrLn "Enter Pie expressions for evaluation, or try :help."
 usage   = putStrLn "Usage: keyl [-vh]"
