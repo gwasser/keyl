@@ -2,7 +2,7 @@ name:                keyl
 version:             0.2.0.0
 synopsis:            Pie - A Small Dependent Type Language
 description:         Please see README.md
-homepage:            https://gitlab.com/gwasser/pie#readme
+homepage:            https://github.com/gwasser/keyl#readme
 license:             GPL-3
 license-file:        COPYING
 author:              Garret Wassermann
@@ -57,4 +57,4 @@ test-suite keyl-test
 
 source-repository head
   type:     git
-  location: https://gitlab.com/gwasser/pie
+  location: https://github.com/gwasser/keyl
