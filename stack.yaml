@@ -15,7 +15,7 @@
 # resolver:
 #  name: custom-snapshot
 #  location: "./custom-snapshot.yaml"
-resolver: lts-21.22 # GHC 9.4.8
+resolver: lts-21.25 # GHC 9.4.8
 compiler: ghc-9.4.8
 compiler-check: match-exact
 # Control whether we use the GHC we find on the path
